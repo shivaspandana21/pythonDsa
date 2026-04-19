@@ -63,3 +63,77 @@ class Solution:
             else:
                 j-=1
         return max_area
+    
+#leetcode 1855 maximum distance beyween a pair of values
+def maxDistance( nums1, nums2):
+    i,j=0,0
+    ans=0
+    n1=len(nums1)
+    n2=len(nums2)
+    while i<n1 and j<n2:
+        if nums1[i]<nums2[j]:
+            ans=max(ans,j-i)
+            j+=1
+        else:
+            i+=1
+    return ans
+
+#42 trapping rain water
+class Solution:
+    def trap(self, height):
+
+        start = 0
+        end = len(height) - 1
+
+        leftMax = 0
+        rightMax = 0
+        totalWater = 0
+
+        while start < end:
+
+            leftMax = max(leftMax, height[start])
+            rightMax = max(rightMax, height[end])
+
+            if leftMax < rightMax:
+                totalWater += leftMax - height[start]
+                start += 1
+            else:
+                totalWater += rightMax - height[end]
+                end -= 1
+
+        return totalWater
+    
+#15 3 sum
+from typing import List
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res = []
+        n = len(nums)
+
+        for i in range(n - 2):
+            # Skip duplicate fixed elements
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            j, k = i + 1, n - 1
+
+            while j < k:
+                total = nums[i] + nums[j] + nums[k]
+
+                if total == 0:
+                    res.append([nums[i], nums[j], nums[k]])
+                    j += 1
+                    k -= 1
+
+                    # Skip duplicate second elements
+                    while j < k and nums[j] == nums[j - 1]:
+                        j += 1
+
+                elif total < 0:
+                    j += 1
+                else:
+                    k -= 1
+
+        return res
